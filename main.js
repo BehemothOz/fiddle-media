@@ -1,3 +1,18 @@
+const createAudio = src => {
+    const element = document.createElement('audio');
+    element.controls = true;
+    element.src = src;
+    element.className = 'audio';
+
+    return element;
+}
+
+const addAudio = src => {
+    const root = document.getElementById('root');
+    const audio = createAudio(src);
+    root.append(audio);
+}
+
 /*
     constraints (or MediaStreamConstraints):
     ex: { audio: true, video: true }
@@ -16,11 +31,12 @@ const stopRecording = recorder => {
 
 const onRecordingReady = event => {
     console.log('call onRecordingReady', event);
-    const audio = document.getElementById('audio');
 
     // event.data contains a blob representing the recording
     const { data } = event;
-    audio.src = URL.createObjectURL(data);
+    const src = URL.createObjectURL(data);
+
+    addAudio(src);
 };
 
 const init = async () => {
